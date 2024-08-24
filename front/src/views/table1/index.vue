@@ -14,7 +14,7 @@
 
       <el-col :offset="2" :span="20">
         <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="uid" label="学生编号"></el-table-column>
+          <el-table-column prop="uid" label="编号"></el-table-column>
           <el-table-column prop="uname" label="姓名"></el-table-column>
           <el-table-column prop="ubrith" label="出生日期"></el-table-column>
           <el-table-column prop="uaddress" label="地址"></el-table-column>
@@ -23,7 +23,7 @@
           <el-table-column prop="urole" label="角色"></el-table-column>
           <el-table-column prop="ucreated" label="创建时间"></el-table-column>
           <el-table-column prop="uupdated" label="更新时间"></el-table-column>
-          <el-table-column prop="ustatus" label="是否激活"></el-table-column>
+          <el-table-column prop="ustatus" label="状态"></el-table-column>
 
           <!-- 操作  自定义列 -->
           <el-table-column label="操作" width="200">
@@ -49,9 +49,9 @@
       </el-col>
     </el-row>
 
-    <el-dialog title="添加学生信息" :visible.sync="AddVisible" width="40%">
+    <el-dialog title="添加用户信息" :visible.sync="AddVisible" width="40%">
       <el-form :model="AddFormData">
-        <el-form-item label="学生编号">
+        <el-form-item label="编号">
           <el-input v-model="AddFormData.uid" placeholder="请输入" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="姓名">

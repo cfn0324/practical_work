@@ -194,7 +194,7 @@
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          axios.get('http://localhost:8080/notice/delNoId/' + row.id).then(res => {
+          axios.get('http://localhost:8080/notice/delNoId' + row.id).then(res => {
               console.log(res.data);
               this.getData();
             })

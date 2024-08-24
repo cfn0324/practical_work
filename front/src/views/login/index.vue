@@ -3,7 +3,8 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
-        <h3 class="title">奕 悟</h3>
+        <h3 class="title" v-if="isLoginMode">用户认证管理平台</h3>
+        <h3 class="title" v-else>注册新账户</h3>
       </div>
 
       <el-form-item prop="username">
@@ -34,19 +35,35 @@
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="isLoginMode ? handleLogin() : handleRegister()"
         />
         <span class="show-pwd" @click="showPwd">
           <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
+      <el-form-item v-if="!isLoginMode" prop="email">
+        <span class="svg-container">
+          <svg-icon icon-class="email" />
+        </span>
+        <el-input
+          ref="email"
+          v-model="loginForm.email"
+          placeholder="Email"
+          name="email"
+          type="email"
+          tabindex="3"
+          auto-complete="on"
+        />
+      </el-form-item>
 
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
+      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="isLoginMode ? handleLogin() : handleRegister()">
+        {{ isLoginMode ? 'Login' : 'Register' }}
+      </el-button>
+
+      <p class="switch-mode" @click="toggleMode">
+        {{ isLoginMode ? '没有账户？注册' : '已有账户？登录' }}
+      </p>
 
     </el-form>
   </div>
@@ -56,7 +73,7 @@
 import { validUsername } from '@/utils/validate'
 
 export default {
-  name: 'Login',
+  name: 'Auth',
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
@@ -72,14 +89,25 @@ export default {
         callback()
       }
     }
+    const validateEmail = (rule, value, callback) => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+      if (!emailRegex.test(value)) {
+        callback(new Error('Please enter a valid email address'))
+      } else {
+        callback()
+      }
+    }
     return {
+      isLoginMode: true, // Toggle between login and registration
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '',
+        password: '',
+        email: ''
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        password: [{ required: true, trigger: 'blur', validator: validatePassword }],
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }]
       },
       loading: false,
       passwordType: 'password',
@@ -105,11 +133,30 @@ export default {
         this.$refs.password.focus()
       })
     },
+    toggleMode() {
+      this.isLoginMode = !this.isLoginMode
+    },
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
           this.$store.dispatch('user/login', this.loginForm).then(() => {
+            this.$router.push({ path: this.redirect || '/' })
+            this.loading = false
+          }).catch(() => {
+            this.loading = false
+          })
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
+    },
+    handleRegister() {
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          this.loading = true
+          this.$store.dispatch('user/register', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
@@ -127,8 +174,6 @@ export default {
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
-/* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
-
 $bg:#283443;
 $light_gray:#fff;
 $cursor: #fff;
@@ -170,25 +215,39 @@ $cursor: #fff;
     color: #454545;
   }
 }
+
+.switch-mode {
+  text-align: center;
+  color: #409EFF;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 14px;
+}
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 
 .login-container {
   min-height: 100%;
-  width: 100%;
-  background-color: $bg;
+  width: 100%; 
+  display: flex;
+  justify-content: flex-end; // 将内容靠右对齐
+  align-items: center; // 垂直居中
+  background-image: url('/1.jpg'); // 设置背景图片路径
+  background-size: cover; // 背景图片覆盖整个容器
+  background-position: center; // 背景图片居中对齐
+  background-repeat: no-repeat; // 不重复背景图片
   overflow: hidden;
 
   .login-form {
-    position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
+    padding: 40px 35px; // 修改 padding
+    margin-right: 50px; // 增加右边距
+    background-color: rgba(0, 0, 0, 0.5); // 背景半透明
+    border-radius: 8px;
     overflow: hidden;
   }
 

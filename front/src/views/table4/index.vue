@@ -50,10 +50,10 @@
               <el-input v-model="AddFormData.pid" placeholder="请输入" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="用户ID">
-          <el-input v-model="AddFormData.uid" placeholder="请输入" :disabled="true"></el-input>
+          <el-input v-model="AddFormData.uid" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="项目ID">
-          <el-input v-model="AddFormData.projectid" placeholder="请输入" :disabled="true"></el-input>
+          <el-input v-model="AddFormData.projectid" placeholder="请输入"></el-input>
         </el-form-item>
             <el-form-item label="用户名">
               <el-input v-model="AddFormData.pusername" placeholder="请输入"></el-input>
@@ -74,10 +74,10 @@
           <el-input v-model="editFormData.pid" placeholder="请输入" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="用户ID">
-          <el-input v-model="editFormData.uid" placeholder="请输入" :disabled="true"></el-input>
+          <el-input v-model="editFormData.uid" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="项目ID">
-          <el-input v-model="editFormData.projectid" placeholder="请输入" :disabled="true"></el-input>
+          <el-input v-model="editFormData.projectid" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="用户名">
           <el-input v-model="editFormData.pusername" placeholder="请输入"></el-input>

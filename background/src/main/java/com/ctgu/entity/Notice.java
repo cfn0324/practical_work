@@ -35,8 +35,8 @@ public class Notice implements Serializable {
     @TableField("content")
     private String content;
 
-    @TableField("时间")
-    private String 时间;
+    @TableField("time")
+    private String time;
 
 
 }

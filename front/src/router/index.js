@@ -85,6 +85,12 @@ export const constantRoutes = [
         name: '用户项目表',
         component: () => import('@/views/table4/index'),
         meta: { title: '用户项目表', icon: 'table' }
+      },
+      {
+        path: 'table5',
+        name: '授权表',
+        component: () => import('@/views/table5/index'),
+        meta: { title: '授权表', icon: 'table' }
       }
     ]
   },
