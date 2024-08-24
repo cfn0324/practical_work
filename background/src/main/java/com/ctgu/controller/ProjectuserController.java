@@ -67,4 +67,15 @@ public class ProjectuserController {
         }
         return projectuserService.list(wrapper);
     }
+    @RequestMapping("/getBypName")
+    public List<Projectuser> getUserBypName(@RequestParam(required = false, defaultValue = "") String projectname) {
+        QueryWrapper<Projectuser> wrapper = new QueryWrapper<>();
+        if (!projectname.isEmpty()) {
+            wrapper.like("projectname", projectname);
+        }
+        return projectuserService.list(wrapper);
+
+
+    }
+
 }

@@ -21,7 +21,7 @@
           <!-- 操作  自定义列 -->
           <el-table-column label="操作" width="300">
             <template slot-scope="scope">
-              <el-button size="mini" @click="WactchVisible = true">查看</el-button> 
+              <el-button size="mini" @click="handleView(scope.$index, scope.row)">查看</el-button>
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
               <el-button size="mini" type="danger"  @click="handleDelete(scope.$index, scope.row)">删除</el-button> 
             </template>
@@ -29,6 +29,16 @@
         </el-table>
       </el-col>
     </el-row>
+    
+    <el-dialog title="查看信息" :visible.sync="WactchVisible" width="60%">
+      <el-table :data="ftableData" style="width: 90%">
+    <el-table-column prop="pusername" label="用户名"></el-table-column>
+    <el-table-column prop="projectname" label="项目名"></el-table-column>
+  </el-table>
+  <span slot="footer" class="dialog-footer">
+    <el-button type="danger" @click="WactchVisible = false">退出</el-button>
+  </span>
+</el-dialog>
 
     <!-- 分页 -->
     <el-row :gutter="20">
@@ -42,15 +52,6 @@
         </div>
       </el-col>
     </el-row>
-    <el-dialog title="查看信息" :visible.sync="WactchVisible" width="40%">
-          <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="pid" label="编号"></el-table-column>
-          <el-table-column prop="projectname" label="项目名"></el-table-column>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="danger" @click="WactchVisible = false">退出</el-button>
-      </span>
-    </el-dialog>
 
     <el-dialog title="添加信息" :visible.sync="AddVisible" width="40%">
       <el-form :model="AddFormData">
@@ -114,7 +115,7 @@ export default {
         projectname: '',
         detal: '',
       },
-
+      ftableData: [],
       tableData: [],
       projectname: '',
 
@@ -150,8 +151,25 @@ export default {
     this.tableData = res.data;
   });
 },
+handleView(index,row) {
+    this.editIndex = index;
+      console.log(index, row);
+      this.projectname = row.projectname;
+    this.fetchDataById(row.projectname);  // 获取对应id的数据
+    this.WactchVisible = true;  // 打开对话框
+  },
 
-    
+  fetchDataById(projectname) {
+    console.log(projectname);
+    axios.get('http://localhost:8080/projectuser/getBypName', {
+  params: {
+      projectname: this.projectname 
+  }
+}).then(res => {
+  console.log(res.data);
+  this.ftableData = res.data;
+});
+},
     handleEdit(index, row) {
       this.editIndex = index;
       console.log(index, row);

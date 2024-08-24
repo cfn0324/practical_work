@@ -74,9 +74,7 @@
           <el-input v-model="AddFormData.uphone" placeholder="请输入" type="tel"></el-input>
         </el-form-item>
         <el-form-item label="角色">
-          <el-radio v-model="AddFormData.urole" label="运营团队成员">运营团队成员</el-radio>
-          <el-radio v-model="AddFormData.urole" label="租户管理员">租户管理员</el-radio>
-          <el-radio v-model="AddFormData.urole" label="普通用户">普通用户</el-radio>
+          <el-input v-model="AddFormData.urole" placeholder="请输入"></el-input>
         </el-form-item>
         <el-form-item label="是否激活">
           <el-radio v-model="AddFormData.ustatus" label="激活">激活</el-radio>
@@ -113,9 +111,9 @@
           <el-input v-model="editFormData.uphone" placeholder="请输入" type="tel"></el-input>
         </el-form-item>
         <el-form-item label="角色">
-          <el-radio v-model="editFormData.urole" label="运营团队成员">运营团队成员</el-radio>
-          <el-radio v-model="editFormData.urole" label="租户管理员">租户管理员</el-radio>
-          <el-radio v-model="editFormData.urole" label="普通用户">普通用户</el-radio>
+          <el-form-item label="角色">
+          <el-input v-model="editFormData.urole" placeholder="请输入"></el-input>
+        </el-form-item>
         </el-form-item>
         <el-form-item label="是否激活">
           <el-radio v-model="editFormData.ustatus" label="激活">激活</el-radio>

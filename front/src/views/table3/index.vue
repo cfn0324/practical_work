@@ -21,7 +21,7 @@
           <!-- 操作  自定义列 -->
           <el-table-column label="操作" width="300">
             <template slot-scope="scope"> 
-              <el-button size="mini" @click="WactchVisible = true">查看</el-button> 
+              <el-button size="mini" @click="handleView(scope.$index, scope.row)">查看</el-button>
               <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
               <el-button size="mini" type="danger"  @click="handleDelete(scope.$index, scope.row)">删除</el-button> 
             </template>
@@ -29,13 +29,12 @@
         </el-table>
       </el-col>
     </el-row>
-
-
-<修改>
-    <el-dialog title="查看信息" :visible.sync="WactchVisible" width="40%">
-          <el-table :data="tableData" style="width: 100%">
-          <el-table-column prop="rid" label="编号"></el-table-column>
-          <el-table-column prop="rolename" label="角色名称"></el-table-column>
+    
+    <el-dialog title="查看信息" :visible.sync="WactchVisible" width="60%">
+          <el-table :data="ftableData" style="width: 90%">
+           <el-table-column prop="uid" label="学生编号"></el-table-column>
+        <el-table-column prop="uname" label="姓名"></el-table-column>
+        <el-table-column prop="ustatus" label="是否激活"></el-table-column>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="danger" @click="WactchVisible = false">退出</el-button>
@@ -101,7 +100,7 @@ export default {
       dialogVisible: false,
       AddVisible: false,
       WactchVisible:false,
-
+      selectedRow: null,
       AddFormData: {
           rid: '',
           rolename: '',
@@ -111,7 +110,7 @@ export default {
           rid: '',
           rolename: '',
       },
-
+      ftableData: [],
       tableData: [],
       rolename: '',
 
@@ -138,7 +137,7 @@ export default {
       this.getData();
     },
     query() {
-  axios.get('http://localhost:8080/rloe/getByName', {
+    axios.get('http://localhost:8080/rloe/getByName', {
     params: {
       rolename: this.rolename  
     }
@@ -146,9 +145,29 @@ export default {
     console.log(res.data);
     this.tableData = res.data;
   });
+}, 
+ handleView(index,row) {
+    this.editIndex = index;
+      console.log(index, row);
+      this.rolename = row.rolename;
+    this.fetchDataById(row.rolename);  // 获取对应id的数据
+    this.WactchVisible = true;  // 打开对话框
+  },
+
+  fetchDataById(rolename) {
+    console.log(rolename);
+    axios.get('http://localhost:8080/users/getByrole', {
+  params: {
+    urole: this.rolename 
+  }
+}).then(res => {
+  console.log(res.data);
+  this.ftableData = res.data;
+});
 },
 
-    
+
+
     handleEdit(index, row) {
       this.editIndex = index;
       console.log(index, row);
@@ -177,7 +196,7 @@ export default {
         });
 
     },
-    handleDelete(index, row) {
+    handleDelete(_index, row) {
       MessageBox.confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',

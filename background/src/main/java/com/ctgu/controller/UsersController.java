@@ -86,6 +86,17 @@ public class UsersController {
         return list;
     }
 
+    @RequestMapping("/getByrole")
+    public List<Users> getUserByrole(@RequestParam(required = false, defaultValue = "") String urole) {
+        QueryWrapper<Users> wrapper = new QueryWrapper<>();
+        if (!urole.isEmpty()) {
+            wrapper.like("urole", urole);
+        }
+        return usersService.list(wrapper);
+    }
+
+
+
     @RequestMapping("/getpy")
     public List<String> getpy() {
         List<String> outputList = new ArrayList<>();
