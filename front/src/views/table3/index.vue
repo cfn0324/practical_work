@@ -32,7 +32,7 @@
     
     <el-dialog title="查看信息" :visible.sync="WactchVisible" width="60%">
           <el-table :data="ftableData" style="width: 90%">
-           <el-table-column prop="uid" label="学生编号"></el-table-column>
+           <el-table-column prop="uid" label="编号"></el-table-column>
         <el-table-column prop="uname" label="姓名"></el-table-column>
         <el-table-column prop="ustatus" label="是否激活"></el-table-column>
       </el-table>

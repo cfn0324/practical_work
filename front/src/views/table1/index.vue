@@ -87,9 +87,9 @@
       </span>
     </el-dialog>
 
-    <el-dialog title="修改学生信息" :visible.sync="dialogVisible" width="40%">
+    <el-dialog title="修改用户信息" :visible.sync="dialogVisible" width="40%">
       <el-form :model="editFormData">
-        <el-form-item label="学生编号">
+        <el-form-item label="编号">
           <el-input v-model="editFormData.uid" placeholder="请输入" :disabled="true"></el-input>
         </el-form-item>
         <el-form-item label="姓名">
@@ -111,9 +111,7 @@
           <el-input v-model="editFormData.uphone" placeholder="请输入" type="tel"></el-input>
         </el-form-item>
         <el-form-item label="角色">
-          <el-form-item label="角色">
           <el-input v-model="editFormData.urole" placeholder="请输入"></el-input>
-        </el-form-item>
         </el-form-item>
         <el-form-item label="是否激活">
           <el-radio v-model="editFormData.ustatus" label="激活">激活</el-radio>
@@ -130,8 +128,7 @@
 
 <script>
 import axios from 'axios'
-// import { MessageBox } from 'element-ui';
-// import { get } from 'core-js/core/dict';
+import { MessageBox } from 'element-ui';
 
 export default {
   name: 'App',

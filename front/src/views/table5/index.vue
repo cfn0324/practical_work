@@ -69,9 +69,9 @@
             </span>
         </el-dialog>
   
-        <el-dialog title="修改学生信息" :visible.sync="dialogVisible" width="40%">
+        <el-dialog title="修改授权信息" :visible.sync="dialogVisible" width="40%">
             <el-form :model="editFormData">
-                <el-form-item label="学生编号">
+                <el-form-item label="编号">
                     <el-input v-model="editFormData.id" placeholder="请输入" :disabled="true"></el-input>
                 </el-form-item>
                 <el-form-item label="姓名">

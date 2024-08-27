@@ -66,9 +66,9 @@ public class UsersController {
         return b;
     }
 
-    @RequestMapping("/delete/{userid}")
-    public int delete(@PathVariable  Integer userid) {
-        usersService.removeById(userid);
+    @RequestMapping("/delete/{uid}")
+    public int delete(@PathVariable  Integer uid) {
+        usersService.removeById(uid);
         return 0;
     }
     //    @RequestMapping("/getByName/{uname}")

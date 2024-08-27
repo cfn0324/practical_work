@@ -209,7 +209,7 @@ handleView(index,row) {
           this.getData()
         });
       })
-      },
+    },
     getData() {
       axios.get('http://localhost:8080/project/getByPage',{
       params: {
